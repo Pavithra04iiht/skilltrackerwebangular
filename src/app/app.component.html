@@ -1,0 +1,34 @@
+<!-- Toolbar -->
+<mat-toolbar color="primary" class="header">
+  <div>Student Records</div>
+  <span class="nav-tool-items">
+    <mat-icon (click)="sidenav.toggle()" class="hamburger">menu</mat-icon>
+  </span>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <!-- Sidenav -->
+  <div *ngIf="!isLoginPage">
+  <mat-sidenav
+    #sidenav
+    [mode]="isBiggerScreen() ? 'over' : 'side'"
+    [(opened)]="opened"
+    [fixedInViewport]="true"
+    [fixedTopGap]
+  >
+    <mat-nav-list>
+      <a mat-list-item routerLinkActive="active" routerLink="/add">
+        <mat-icon>add</mat-icon> My Skill
+      </a>
+      <a mat-list-item routerLinkActive="active" routerLink="/admin">
+        <mat-icon>format_list_bulleted</mat-icon> View Students
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  </div>
+
+  <!-- Main content -->
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

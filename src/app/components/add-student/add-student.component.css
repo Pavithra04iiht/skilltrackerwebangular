@@ -1,0 +1,19 @@
+p{
+font-family:Lato;
+}
+
+.example-card{
+    margin:4px;
+}
+
+mat-card-subtitle{
+    clear:both;
+}
+
+mat-card-title{
+    clear:both;
+}
+
+input[type="number"]{
+    width:90%;
+}

@@ -1,0 +1,134 @@
+<!-- Title group  -->
+<div class="title-group">
+  <h1 class="header">Add Skill</h1>
+  <h5>Add your details,technical and non-technical skill set details.</h5>
+  <mat-divider fxFlex="1 0"></mat-divider>
+</div>
+
+<p *ngIf="HasError" class="error-block">
+  {{ErrorMessage}}
+</p>
+<!-- Form -->
+<div class="inner-wrapper">
+  <form
+    [formGroup]="engineerForm"
+    (ngSubmit)="submitEngineerForm()"
+    #resetStudentForm="ngForm"
+    novalidate
+  >
+    <!-- Left block -->
+    <mat-card>
+      <div class="controlers-wrapper">
+        <!-- Associate Id -->
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            placeholder="Engineer Id*"
+            maxlength="10"
+            formControlName="id"
+            [readonly]="true"
+          />
+          <mat-error *ngIf="handleError('id', 'required')">
+            Engineer id is required (5 to 10 character).
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Name -->
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            placeholder="Name*"
+            minlength="5"
+            maxlength="30"
+            formControlName="name"
+           
+          />
+          <mat-error *ngIf="handleError('name', 'required')">
+            You must provide a valid name(5-30 characters).
+          </mat-error>
+        </mat-form-field>
+
+        <!--  Email -->
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            placeholder="Email*"
+            formControlName="email"
+          />
+          <mat-error *ngIf="handleError('email', 'required')">
+            You must provide a valid email address</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <!--  Mobile -->
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            minlength="10"
+            maxlength="10"
+            placeholder="Mobile No*"
+            formControlName="mobileNo"
+          />
+          <mat-error *ngIf="handleError('mobileNo', 'required')">
+            You must provide a valid mobile number(10 digit).</strong>
+          </mat-error>
+        </mat-form-field>
+        </div>
+        </mat-card>
+
+        <div style="clear:both"></div>
+
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title><h3>Technical Skills</h3></mat-card-title>
+            <mat-card-subtitle>Enter your expertise level between 0-20 for each technical skill.</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div *ngFor="let skill for ts;let i=index">
+              <mat-form-field class="example-full-width">
+                <input name="technicalskills[{{i}}]
+                matInput min="0" max="20" type="number" 
+                (blur)="validateSkill($event,i)"
+                (change)="onTechnicalSkillChange($event,i)"
+                value="{{skill.expertiseLevel}}"
+                placeholder="{{skill.skillName}}"
+                />
+              </mat-form-field>
+
+            </div>
+          </mat-card-content>
+          </mat-card>
+
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title><h3>Non - Technical Skills</h3></mat-card-title>
+            <mat-card-subtitle>Enter your expertise level between 0-20 for each non-technical skill.</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div *ngFor="let skill for ts;let i=index">
+              <mat-form-field class="example-full-width">
+                <input name="nonTechnicalskills[{{i}}]
+                matInput min="0" max="20" type="number" 
+                (blur)="validateSkill($event,i)"
+                (change)="onNonTechnicalSkillChange($event,i)"
+                value="{{skill.expertiseLevel}}"
+                placeholder="{{skill.skillName}}"
+                />
+              </mat-form-field>
+
+            </div>
+          </mat-card-content>
+          </mat-card>
+
+          <div style="clear:both"></div>        
+
+    <!-- Submit & Reset -->
+    <mat-card>
+      <div class="full-wrapper button-wrapper">
+        <div class="button-wrapper">
+          <button mat-raised-button color="primary">Submit</button>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+</div>
