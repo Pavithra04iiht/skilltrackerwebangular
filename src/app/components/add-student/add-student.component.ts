@@ -34,6 +34,7 @@ export class AddStudentComponent implements OnInit {
   ErrorMessage="";
   maxScore=20;
   currentUser:any;
+  
  
 
   ngOnInit() {
@@ -44,7 +45,7 @@ export class AddStudentComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     private ngZone: NgZone,
-    private engineertApi: EngineerService,
+    private engineerApi: EngineerService,
     private authenticationService: AuthenticationService
 
   ) {}
@@ -90,55 +91,46 @@ export class AddStudentComponent implements OnInit {
   }
 
   validateSkill(e,i){
-    
-  }
-
-  /* Reactive book form */
-  submitBookForm() {
-    this.studentForm = this.fb.group({
-      student_name: ['', [Validators.required]],
-      student_email: ['', [Validators.required]],
-      section: ['', [Validators.required]],
-      subjects: [this.subjectArray],
-      dob: ['', [Validators.required]],
-      gender: ['Male'],
-    });
-  }
-
-  /* Add dynamic languages */
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-    // Add language
-    if ((value || '').trim() && this.subjectArray.length < 5) {
-      this.subjectArray.push({ name: value.trim() });
-    }
-    // Reset the input value
-    if (input) {
-      input.value = '';
+    const maxExpertiseLevel=20;
+    let expertiseLevel=parseInt(e.target.value);
+    if(Number.isInteger(expertiseLevel)){
+      if(expertiseLevel<0)e.target.value=0;
+      if(expertiseLevel>maxExpertiseLevel)e.target.value=maxExpertiseLevel;
+    }else{
+      e.target.value=0;
     }
   }
 
-  /* Remove dynamic languages */
-  remove(subject: Subject): void {
-    const index = this.subjectArray.indexOf(subject);
-    if (index >= 0) {
-      this.subjectArray.splice(index, 1);
-    }
+  onTechnicalSkillChange($event,index){
+    let value=$event.target.value;
+    this.ts[index].expertiseLevel=value>this.maxScore?this.maxScore:value;
+
+
   }
 
-  /* Date */
-  formatDate(e) {
-    var convertDate = new Date(e.target.value).toISOString().substring(0, 10);
-    this.studentForm.get('dob').setValue(convertDate, {
-      onlyself: true,
-    });
+  onNonTechnicalSkillChange($event,index){
+    let value=$event.target.value;
+    this.nts[index].expertiseLevel=value>this.maxScore?this.maxScore:value;
+
   }
 
-  /* Get errors */
-  public handleError = (controlName: string, errorName: string) => {
-    return this.studentForm.controls[controlName].hasError(errorName);
+  /* error */
+  public handleError=(controlName:string,errorName:string)=>{
+    return this.engineerForm.controls[controlName].hasError(errorName);
   };
+
+  updateScoreIfEmpty(skillSets:Array<any>):any[]{
+    let updateScore=skillSets.map((s)=>{
+      if(s.expertiseLevel=="")s.expertiseLevel=0;
+      return s;
+    });
+
+    return updateScore;
+
+  }
+
+    
+
 
   /* Submit book */
   submitEngineerForm() {
