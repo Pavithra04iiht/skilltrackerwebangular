@@ -19,15 +19,20 @@ export class AddStudentComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
-  @ViewChild('chipList') chipList;
-  @ViewChild('resetStudentForm') myNgForm;
+  @ViewChild("chipList",{static:true}) chipList;
+  @ViewChild("resetForm",{static:true}) myNgForm;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  studentForm: FormGroup;
-  subjectArray: Subject[] = [];
-  SectioinArray: any = ['A', 'B', 'C', 'D', 'E'];
+  sengineerForm: FormGroup;
+  ts: any =technicalSkills;
+  nts: any =nonTechnicalSkills;
+  HasError=false;
+  ErrorMessage="";
+  maxScore=20;
+  currentUser:any;
+ 
 
   ngOnInit() {
-    this.submitBookForm();
+    this.initializeForm();
   }
 
   constructor(
@@ -35,7 +40,52 @@ export class AddStudentComponent implements OnInit {
     private router: Router,
     private ngZone: NgZone,
     private studentApi: ApiService
+
   ) {}
+
+  initializeForm(){
+    this.currentUser=;
+    this.engineerForm=this.fb.group({
+      id:[
+        this.currentUser.username,
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(30),
+        ],
+      ],
+      name:[
+        "",
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(30),
+        ],
+      ],
+      email:[
+        this.currentUser.email,
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"),
+        ],
+      ],
+      mobileNo:[
+        "",
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ],
+      ],
+      technicalSkills:[this.ts],
+      nonTechnicalSkills:[this.nts],
+    });
+  }
+
+  validateSkil(e,i){
+    
+  }
 
   /* Reactive book form */
   submitBookForm() {
@@ -85,11 +135,25 @@ export class AddStudentComponent implements OnInit {
   };
 
   /* Submit book */
-  submitStudentForm() {
-    if (this.studentForm.valid) {
-      this.studentApi.AddStudent(this.studentForm.value).subscribe((res) => {
-        this.ngZone.run(() => this.router.navigateByUrl('/students-list'));
-      });
+  submitEngineerForm() {
+    this.HasError=false;
+    console.log(this.engineerForm.value);
+    if (this.engineerForm.valid) {
+      this.engineerForm.value.technicalSkills=this.updateScoreIfEmpty(
+        this.engineerForm.value.technicalSkills
+      );
+      this.engineerForm.value.nonTechnicalSkills=this.updateScoreIfEmpty(
+        this.engineerForm.value.nonTechnicalSkills
+      );
+      this.engineerApi.Add(this.engineerForm.value).subscribe((res) => {
+        let path=this.currentUser.isAdmin?"/admin":"/dashboard";
+        this.ngZone.run(() => this.router.navigateByUrl(path));
+      },
+      (error)=>{
+        this.HasError=true;
+        this.ErrorMessage=error;
+      }
+      );
     }
   }
 }
