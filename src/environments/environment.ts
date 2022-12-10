@@ -4,6 +4,10 @@
 
 export const environment = {
   production: false
+  apiBaseUrl:"",
+  cognitoUserPoolId:"",
+  cognitoAppClientId:"",
+  apiKey:''
 };
 
 /*
