@@ -1,0 +1,52 @@
+[
+    {
+        "id": "S01",
+        "skillName": "HTML ,CSS, Javascript",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S02",
+        "skillName": "Angular",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S03",
+        "skillName": "React",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S04",
+        "skillName": "ASP.NET Core",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S05",
+        "skillName": "RESTful",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S06",
+        "skillName": "Entity Framework",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S07",
+        "skillName": "Git",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S08",
+        "skillName": "Docker",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S09",
+        "skillName": "Jenkins",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S10",
+        "skillName": "Azure",
+        "expertiseLevel": ""
+    }
+]

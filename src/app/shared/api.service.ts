@@ -19,7 +19,7 @@ export class ApiService {
 
   // Add student
   AddStudent(data: Student): Observable<any> {
-    let API_URL = `${this.endpoint}/add-student`;
+    let API_URL = `${this.endpoint}/add`;
     return this.http.post(API_URL, data).pipe(catchError(this.errorMgmt));
   }
 

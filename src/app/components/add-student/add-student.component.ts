@@ -2,8 +2,13 @@ import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { EngineerService } from './../../shared/engineer.services';
+import { EngineerService } from 'src/app/shared/engineer.service'; 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import technicalSkills from "src/app/data/tech-skills.json";
+import nonTechnicalSkills from "src/app/data/nontech-skills.json";
+
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 export interface Subject {
   name: string;
@@ -22,7 +27,7 @@ export class AddStudentComponent implements OnInit {
   @ViewChild("chipList",{static:true}) chipList;
   @ViewChild("resetForm",{static:true}) myNgForm;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  sengineerForm: FormGroup;
+  engineerForm: FormGroup;
   ts: any =technicalSkills;
   nts: any =nonTechnicalSkills;
   HasError=false;
@@ -39,12 +44,13 @@ export class AddStudentComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     private ngZone: NgZone,
-    private studentApi: ApiService
+    private engineertApi: EngineerService,
+    private authenticationService: AuthenticationService
 
   ) {}
 
   initializeForm(){
-    this.currentUser=;
+    this.currentUser=this.authenticationService.getLoggedInUser();
     this.engineerForm=this.fb.group({
       id:[
         this.currentUser.username,
@@ -83,7 +89,7 @@ export class AddStudentComponent implements OnInit {
     });
   }
 
-  validateSkil(e,i){
+  validateSkill(e,i){
     
   }
 

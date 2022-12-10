@@ -1,0 +1,17 @@
+[
+    {
+        "id": "S01",
+        "skillName": "Spoken",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S02",
+        "skillName": "Communication",
+        "expertiseLevel": ""
+    },
+    {
+        "id": "S03",
+        "skillName": "Aptitude",
+        "expertiseLevel": ""
+    }
+]
