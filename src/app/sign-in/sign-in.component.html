@@ -1,33 +1,62 @@
-<div class="row justify-content-center my-5">
-    <div class="col-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col mb-2">
-              <label for="email" class="form-label">Email:</label>
-              <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control form-control-sm">
-            </div>
+<div class="login-page box-card">
+  <div>
+    <img src="" width="100%" heigth=""/>
+  </div>
+
+</div>
+<div class="login-container">
+  <div class="title-group">
+    <h1 class="header">Sign In</h1>
+    <div class="sub-title" >Sign-in to the Skill Tracker Application.</div>
+    <mat-divder fxFlex="1 0"></mat-divder>
+
+  </div>
+
+  <p *ngIf="HasError" class="error-block">
+    {{ErrorMessage}}
+
+  </p>
+
+  <div class="full-wrapper">
+    <form 
+    [formGroup]="loginForm"
+    (ngSubmit)="onSignIn()"
+    #restForm="ngForm"
+    novalidate>
+    <p>
+      <mat-form-field apperance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username"/>
+        <mat-error *ngIf="handleError('username','required')"> Username is required (5 to 10 characters).</mat-error>
+      </mat-form-field>
+    </p>
+
+
+    <p>
+      <mat-form-field apperance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="Password" type="{{hide?'password':'text'}}" formControlName="password" required/>
+        <mat-icon matSuffix (click)="hide=!hide">{{hide?"visibility_off":"visibility"}}</mat-icon>
+        <mat-error *ngIf="handleError('password','required')"> Password is required.</mat-error>
+      </mat-form-field>
+    </p>
+  
+    <mat-card>
+      <div class="full-wrapper button-wrapper">
+        <div class="full-wrapper" style="text-align:center">
+          <button mat-raised-button color="primary">Login</button>
           </div>
-          <div class="row">
-            <div class="col mb-2">
-              <label for="password" class="form-label">Password:</label>
-              <div class="input-group input-group-sm">
-                <input [type]="user.showPassword ? 'text' : 'password'" id="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control form-control-sm">
-                <button type="button" class="btn btn-outline-secondary" (click)="user.showPassword = !user.showPassword">
-                  <i class="bi" [ngClass]="{'bi-eye-fill': !user.showPassword, 'bi-eye-slash-fill': user.showPassword}"></i>
-                </button>
-              </div>
+          <div  style="text-align:center; margin-top: 20px;">
+            <div class="sub-title"></div>
+            New to Skill Tracker?<a href="/register">Sign-Up</a>
             </div>
-          </div>
-          <div class="row">
-            <div class="col d-grid">
-              <button type="button" (click)="signIn()" class="btn btn-sm btn-success" [disabled]="loading">
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
-                Sign in
-              </button>
             </div>
-          </div>
-        </div>
+
       </div>
-    </div>
-    </div>
+    </mat-card>
+  
+  </form>
+  </div>
+  </div>
+
+</div>
